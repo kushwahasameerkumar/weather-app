@@ -1,8 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
+import Search from './components/Search';
+import Weather from './components/Weather';
+
+class App extends Component{
+  state = {
+      showWeather: false,
+      city: ''
+  }
+
+  setCity = (city) => {
+      this.setState({
+          city: city
+      })
+  }
+
+  setShowWeather = (previousWeather) => {
+    this.setState({
+        showWeather: !previousWeather
+    })
+  }
+
+  render(){
+    return (
+        <div>
+            { this.state.showWeather ? 
+                <Weather setShowWeather={this.setShowWeather} city={this.state.city} /> :
+                <Search setCity={this.setCity} setShowWeather={this.setShowWeather} /> 
+            }
+        </div>
+    );
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
