@@ -37,7 +37,7 @@ class Weather extends Component{
                     sun: data.sys,
                     condition: data.weather[0].main,
                     pressure: data.main.pressure,
-                    temp: data.main.temp,
+                    temp: Math.round(data.main.temp),
                     temp_max: data.main.temp_max,
                     temp_min: data.main.temp_min,
                     humidity: data.main.humidity,
@@ -75,7 +75,7 @@ class Weather extends Component{
                         <div className="card-body">
                           <h5 className="card-title" style={style}>Weather in {weather.city}, {weather.sun.country}</h5>
                           <p className="card-text"><small className="text-muted">Last updated 10 mins ago</small></p>
-                          <table className="table col-6">
+                          <table className="table col-md-6 col-lg-6 col-sm-12 ">
                                 
                                 <tbody>
                                   <Wind value={weather.wind.speed} />
