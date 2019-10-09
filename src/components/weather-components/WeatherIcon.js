@@ -5,7 +5,7 @@ export default class WeatherIcon extends Component {
         const name = this.props.name;
         return (
             <div>
-                <img src={`./images/weather/${name}.png`} 
+                <img src={`images/weather/${name}.png`} 
                 className="card-img" 
                 alt={name} />
             </div>
