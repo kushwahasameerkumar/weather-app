@@ -10,6 +10,7 @@ import Wind from './weather-components/Wind'
 import Humidity from './weather-components/Humidity';
 import Temp from './weather-components/Temp';
 import WeatherCondition from './weather-components/WeatherCondition'
+import WeatherIcon from './weather-components/WeatherIcon';
 
 class Weather extends Component{
     state = {
@@ -20,7 +21,8 @@ class Weather extends Component{
             sun: '',
             pressure: '',
             temp: ''
-        }
+        },
+        cityFound: true
     }
 
     componentDidMount(){
@@ -31,22 +33,33 @@ class Weather extends Component{
         fetch(`http://api.openweathermap.org/data/2.5/weather?q=${this.props.city}&units=metric&APPID=1f83bb8675c26e742fe06a8c59e6d2e4`)
         .then(data => data.json())
         .then(data => {
-            this.setState({
-                weather: {
-                    wind: data.wind,
-                    sun: data.sys,
-                    condition: data.weather[0].main,
-                    pressure: data.main.pressure,
-                    temp: Math.round(data.main.temp),
-                    temp_max: data.main.temp_max,
-                    temp_min: data.main.temp_min,
-                    humidity: data.main.humidity,
-                    city: data.name ,
-                    coord: data.coord.lat + ", " + data.coord.lon,
-                    timezone: data.timezone
-                },
-                loading: false
-            })
+            if(data.cod === 200){
+                this.setState({cityFound: true});
+            }else{
+                this.setState({cityFound: false});
+            }
+            return data;
+        })
+        .then(data => {
+            if(this.state.cityFound){
+                this.setState({
+                    weather: {
+                        wind: data.wind,
+                        sun: data.sys,
+                        condition: data.weather[0].main,
+                        pressure: data.main.pressure,
+                        temp: Math.round(data.main.temp),
+                        temp_max: data.main.temp_max,
+                        temp_min: data.main.temp_min,
+                        humidity: data.main.humidity,
+                        city: data.name ,
+                        coord: data.coord.lat + ", " + data.coord.lon,
+                        timezone: data.timezone,
+                        img: data.weather[0].main.toString().toLowerCase()
+                    },
+                    loading: false
+                })
+            }
         });
     }
 
@@ -63,11 +76,13 @@ class Weather extends Component{
         }
         const weather = this.state.weather;
         return (
-            <div>{console.log(weather.temp)}
+            <div>
             <div className="card mb-3 mt-3" >
+                {this.state.cityFound ? 
                     <div className="row no-gutters">
                       <div className="col-md-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-bh1-lEVvdXEUySw6xRiMQ5CJ524ykGnYm8G0e0NI3sPmyEZA" className="card-img" alt="..." />
+                            {/* <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-bh1-lEVvdXEUySw6xRiMQ5CJ524ykGnYm8G0e0NI3sPmyEZA" className="card-img" alt="..." /> */}
+                            <WeatherIcon name={weather.img} />
                             <Temp value={weather.temp} />
                             <WeatherCondition value={weather.condition} />
                       </div>
@@ -91,6 +106,15 @@ class Weather extends Component{
                         </div>
                       </div>
                     </div>
+
+                    :
+
+                    
+                    <div className="card-body">
+                          <h5 className="card-title text-center" style={style}>Sorry, weather data for {this.props.city} isn't available.</h5>
+                    </div>
+                    
+                }
             </div>
             <div className="row">
                 <div className="col">   
