@@ -30,7 +30,7 @@ class Weather extends Component{
     }
 
     fetchData(city){
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${this.props.city}&units=metric&APPID=1f83bb8675c26e742fe06a8c59e6d2e4`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.props.city}&units=metric&APPID=1f83bb8675c26e742fe06a8c59e6d2e4`)
         .then(data => data.json())
         .then(data => {
             if(data.cod === 200){
