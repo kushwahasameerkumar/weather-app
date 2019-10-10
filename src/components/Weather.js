@@ -118,7 +118,7 @@ class Weather extends Component{
             </div>
             <div className="row">
                 <div className="col">   
-                    <p className="text-center"><a href="#" onClick={e => this.props.setShowWeather(true)}>Go back</a></p>
+                    <p className="text-center"><button type="button" className="btn btn-link" onClick={e => this.props.setShowWeather(false)}>Go back</button></p>
                 </div>
             </div>
 
