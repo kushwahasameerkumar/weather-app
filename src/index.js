@@ -17,9 +17,9 @@ class App extends Component{
       })
   }
 
-  setShowWeather = (previousWeather) => {
+  setShowWeather = (setShowWeather) => {
     this.setState({
-        showWeather: !previousWeather
+        showWeather: setShowWeather
     })
   }
 
