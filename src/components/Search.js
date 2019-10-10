@@ -72,9 +72,15 @@ class Search extends Component{
                     <div className="row no-gutters">
                         <div className="col-md-4 border-primary">
                             <WeatherIcon name={this.state.weather.weatherIcon} />
-                            <Temp value={this.state.weather.temp} />
-                            <WeatherCondition value={this.state.weather.condition} />
-                            <UserLocation city={this.state.weather.city} country={this.state.weather.country} setCty={this.props.setCity} setShowWeather={this.props.setShowWeather} />
+                            {this.state.loading ?
+                                null 
+                                : 
+                                <div>
+                                    <Temp value={this.state.weather.temp} />
+                                    <WeatherCondition value={this.state.weather.condition} />
+                                    <UserLocation city={this.state.weather.city} country={this.state.weather.country} setCty={this.props.setCity} setShowWeather={this.props.setShowWeather} />
+                                </div>
+                            }
                         </div>
                         <div className="col-md-8">
                             <div className="card-body">
